@@ -4,7 +4,33 @@ require_once __DIR__ . '/../models/User.php';
 
 use models\User;
 
-$users = User::get();
+if (!isset($_GET['id'])) {
+    header("Location: list-user.php");
+    exit;
+}
+
+$user = User::find($_GET['id']);
+
+if (!$user) {
+    header("Location: list-user.php");
+    exit;
+}
+
+if (isset($_POST['submit'])){
+    $data = [
+        'id' => $_GET['id'],
+        'firstname' => $_POST['firstname'],
+        'lastname' => $_POST['lastname'],
+        'gender' => $_POST['gender'],
+        'age' => $_POST['age'],
+        'weight' => $_POST['weight'],
+    ];
+    
+    User::update($data);
+    header("Location: list-user.php");
+    exit;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -100,66 +126,51 @@ $users = User::get();
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Dashboard</h1>
+                    <h1 class="mt-4">Add User</h1>
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="list-user.php">User</a></li>
+                        <li class="breadcrumb-item active">Add User</li>
                     </ol>
                     <div class="row">
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                List User
+                                Add User
                             </div>
                             <div class="card-body">
-                                <div class="mb-3 text-end">
-                                    <a href="create-user.php" class="btn btn-success">
-                                        <i class="fas fa-plus">Add User</i>
-                                    </a>
-                                </div>
-                                <table id="datatablesSimple">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Gender</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Gender</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        <?php foreach ($users as $index => $user): ?>
-                                            <tr>
-                                                <td><?= $index + 1 ?></td>
-                                                <td><?= $user['firstname'] ?></td>
-                                                <td><?= $user['lastname'] ?></td>
-                                                <td><?= $user['gender'] ?></td>
-                                                <td>
-                                                    <a href="detail-user.php?id=<?= $user['id'] ?>" class="btn btn-primary">
-                                                        <i class="fas fa-eye"></i> Detail
-                                                    </a>
+                                <form action="edit-user.php?id=<?= $user['id'] ?>" method="POST">
+                                    <div class="mb-3">
+                                        <label for="firstname" class="form-label">First Name</label>
+                                        <input type="text" class="form-control" id="firstname" name="firstname" value="<?= $user['firstname'] ?>" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="lastname" class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" id="lastname" name="lastname" value="<?= $user['lastname'] ?>" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label d-block">Gender</label>
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" class="form-check-input" name="gender" id="laki-laki" value="laki-laki" <?= $user['gender'] === 'laki-laki' ? 'checked' : '' ?>>
+                                            <label for="laki-laki" class="form-check-label">Laki-laki</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" class="form-check-input" name="gender" id="perempuan" value="perempuan" <?= $user['gender'] === 'perempuan' ? 'checked' : '' ?>>
+                                            <label for="perempuan" class="form-check-label">Perempuan</label>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="age" class="form-label">Age</label>
+                                        <input type="number" class="form-control" id="age" name="age" min="0" max="100" value="<?= $user['age'] ?>" required>
+                                    </div>
+                                    <div class=" mb-3">
+                                        <label for="weight" class="form-label">Weight</label>
+                                        <input type="number" class="form-control" id="weight" name="weight" min="0" max="100" value="<?= $user['weight'] ?>" required>
+                                    </div>
 
-                                                    <a href="edit-user.php?id=<?= $user['id'] ?>" class="btn btn-warning">
-                                                        <i class="fas fa-edit"></i> Edit
-                                                    </a>
-
-                                                    <a href="delete-user.php" class="btn btn-danger">
-                                                        <i class="fas fa-trash"></i> Delete
-                                                    </a>
-                                                </td>
-                                                </td>
-                                            </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
+                                    <a href=" list-user.php" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+                                    <button type="submit" name="submit" class="btn btn-warning"><i class="fas fa-save"></i> Update </button>
+                                </form>
                             </div>
                         </div>
                     </div>

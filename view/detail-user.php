@@ -4,7 +4,18 @@ require_once __DIR__ . '/../models/User.php';
 
 use models\User;
 
-$users = User::get();
+if (!isset($_GET['id'])) {
+    header("Location: list-user.php");
+    exit;
+}
+
+$user = User::find($_GET['id']);
+
+if (!$user) {
+    header("Location: list-user.php");
+    exit;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -100,66 +111,50 @@ $users = User::get();
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Dashboard</h1>
+                    <h1 class="mt-4">Add User</h1>
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="list-user.php">User</a></li>
+                        <li class="breadcrumb-item active">Detail User</li>
                     </ol>
                     <div class="row">
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                List User
+                                Add User
                             </div>
                             <div class="card-body">
-                                <div class="mb-3 text-end">
-                                    <a href="create-user.php" class="btn btn-success">
-                                        <i class="fas fa-plus">Add User</i>
-                                    </a>
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>First Name</th>
+                                    <td><?= $user['firstname'] ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Last Name</th>
+                                    <td><?= $user['lastname'] ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Gender</th>
+                                    <td><?= $user['gender'] ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Age</th>
+                                    <td><?= $user['age'] ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Weight</th>
+                                    <td><?= $user['weight'] ?></td>
+                                </tr>
+                            </table>
+
+                                <div class="mt-3">
+                                    <a href="list-user.php" class="btn btn-secondary"><i class="fas 
+                                    fa-arrow-left"></i> Back</a>
+                                    <a href="edit-user.php?id=<? $user['id'] ?>" class="btn btn-warning"><i class="fas 
+                                    fa-arrow-left"></i> Edit</a>
+                                    <a href="delete-user.php?id=<? $user['id'] ?>" class="btn btn-danger"><i class="fas 
+                                    fa-arrow-left"></i> Delete</a>
                                 </div>
-                                <table id="datatablesSimple">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Gender</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Gender</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        <?php foreach ($users as $index => $user): ?>
-                                            <tr>
-                                                <td><?= $index + 1 ?></td>
-                                                <td><?= $user['firstname'] ?></td>
-                                                <td><?= $user['lastname'] ?></td>
-                                                <td><?= $user['gender'] ?></td>
-                                                <td>
-                                                    <a href="detail-user.php?id=<?= $user['id'] ?>" class="btn btn-primary">
-                                                        <i class="fas fa-eye"></i> Detail
-                                                    </a>
-
-                                                    <a href="edit-user.php?id=<?= $user['id'] ?>" class="btn btn-warning">
-                                                        <i class="fas fa-edit"></i> Edit
-                                                    </a>
-
-                                                    <a href="delete-user.php" class="btn btn-danger">
-                                                        <i class="fas fa-trash"></i> Delete
-                                                    </a>
-                                                </td>
-                                                </td>
-                                            </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
                             </div>
                         </div>
                     </div>

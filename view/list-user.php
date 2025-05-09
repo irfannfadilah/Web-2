@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../models/User.php';
+require_once __DIR__. '/../models/User.php';
 
 use models\User;
 
@@ -96,13 +96,14 @@ $users = User::get();
                     Muhamad Irfan Fadilah
                 </div>
             </nav>
-        </div>
+        </div> 
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Dashboard</h1>
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Add User</li>
                     </ol>
                     <div class="row">
                         <div class="card mb-4">
@@ -111,7 +112,7 @@ $users = User::get();
                                 List User
                             </div>
                             <div class="card-body">
-                                <div class="mb-3 text-end">
+                                <div class = "mb-3 text-end"> 
                                     <a href="create-user.php" class="btn btn-success">
                                         <i class="fas fa-plus">Add User</i>
                                     </a>
@@ -137,28 +138,28 @@ $users = User::get();
                                     </tfoot>
                                     <tbody>
                                         <?php foreach ($users as $index => $user): ?>
-                                            <tr>
-                                                <td><?= $index + 1 ?></td>
-                                                <td><?= $user['firstname'] ?></td>
-                                                <td><?= $user['lastname'] ?></td>
-                                                <td><?= $user['gender'] ?></td>
-                                                <td>
-                                                    <a href="detail-user.php?id=<?= $user['id'] ?>" class="btn btn-primary">
-                                                        <i class="fas fa-eye"></i> Detail
-                                                    </a>
+                                                <tr>
+                                                    <td><?= $index + 1 ?></td>
+                                                    <td><?= $user ['firstname'] ?></td>
+                                                    <td><?= $user ['lastname'] ?></td>
+                                                    <td><?= $user ['gender'] ?></td>
+                                                    <td>
+                                                        <a href="detail-user.php?id=<?= $user['id'] ?>" class="btn btn-primary">
+                                                            <i class="fas fa-eye"></i> Detail
+                                                        </a>
 
-                                                    <a href="edit-user.php?id=<?= $user['id'] ?>" class="btn btn-warning">
-                                                        <i class="fas fa-edit"></i> Edit
-                                                    </a>
+                                                        <a href="edit-user.php?id=<?= $user['id'] ?>" class="btn btn-warning">
+                                                            <i class="fas fa-edit"></i> Edit
+                                                        </a>
 
-                                                    <a href="delete-user.php" class="btn btn-danger">
-                                                        <i class="fas fa-trash"></i> Delete
-                                                    </a>
-                                                </td>
-                                                </td>
-                                            </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
+                                                        <a href="delete-user.php?id=<?= $user['id'] ?>" class="btn btn-danger">
+                                                            <i class="fas fa-trash"></i> Delete
+                                                        </a>
+                                                    </td>
+                                            </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                    </tbody>    
                                 </table>
                             </div>
                         </div>
