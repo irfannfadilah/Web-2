@@ -4,6 +4,7 @@ require_once __DIR__ . '/../models/User.php';
 
 use models\User;
 
+
 $users = User::get();
 ?>
 
@@ -22,6 +23,7 @@ $users = User::get();
     <link
         href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"
         rel="stylesheet" />
+    <link href="../public/css/styles.css" rel="stylesheet" />
     <link href="../public/css/styles.css" rel="stylesheet" />
     <script
         src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
@@ -94,13 +96,17 @@ $users = User::get();
                 <div class="sb-sidenav-footer">
                     <div class="small">Logged in as:</div>
                     Muhamad Irfan Fadilah
+                    Muhamad Irfan Fadilah
                 </div>
             </nav>
-        </div>
+        </div> 
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Dashboard</h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
+                    </ol>
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
                     </ol>
@@ -123,6 +129,7 @@ $users = User::get();
                                             <th>First Name</th>
                                             <th>Last Name</th>
                                             <th>Gender</th>
+                                            <th>Gender</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -131,6 +138,7 @@ $users = User::get();
                                             <th>No</th>
                                             <th>First Name</th>
                                             <th>Last Name</th>
+                                            <th>Gender</th>
                                             <th>Gender</th>
                                             <th>Action</th>
                                         </tr>
@@ -166,12 +174,14 @@ $users = User::get();
                 </div>
             </main>
             <?php include_once 'footer.php'; ?>
+            <?php include_once 'footer.php'; ?>
         </div>
     </div>
 
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
+    <script src="../public/js/scripts.js"></script>
     <script src="../public/js/scripts.js"></script>
     <script
         src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"
@@ -181,6 +191,7 @@ $users = User::get();
     <script
         src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
         crossorigin="anonymous"></script>
+    <script src="../public/js/datatables-simple-demo.js"></script>
     <script src="../public/js/datatables-simple-demo.js"></script>
 </body>
 

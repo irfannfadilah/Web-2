@@ -13,6 +13,7 @@ class User
     {
         $pdo = Connection::make();
         $sql = 'SELECT * FROM users';
+        $sql = 'SELECT * FROM users';
         $statement = $pdo->query($sql);
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -35,9 +36,33 @@ class User
         //     ':age' => $data['age'],
         //     ':weight' => $data['weight'],
         // ]);
+        $pdo = Connection::make();
+        $sql = 'INSERT INTO users (firstname, lastname, gender, age, weight) VALUES (:firstname, :lastname, :gender, :age, :weight)';
+        $statement = $pdo->prepare($sql);
+        $statement->bindParam(':firstname', $data['firstname']);
+        $statement->bindParam(':lastname', $data['lastname']);
+        $statement->bindParam(':gender', $data['gender']);
+        $statement->bindParam(':age', $data['age']);
+        $statement->bindParam(':weight', $data['weight']);
+        return $statement->execute();
+
+        // return $statement->execute([
+        //     ':firstname' => $data['firstname'],
+        //     ':lastname' => $data['lastname'],
+        //     ':gender' => $data['gender'],
+        //     ':age' => $data['age'],
+        //     ':weight' => $data['weight'],
+        // ]);
     }
     public static function find($id)
     {
+        $pdo = Connection::make();
+        $sql = 'SELECT * FROM users WHERE id = :id';
+        $statement = $pdo->prepare($sql);
+        $statement->bindParam(':id', $id);
+        $statement->execute();
+
+        return $statement->fetch(PDO::FETCH_ASSOC);
         $pdo = Connection::make();
         $sql = 'SELECT * FROM users WHERE id = :id';
         $statement = $pdo->prepare($sql);
